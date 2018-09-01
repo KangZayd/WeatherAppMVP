@@ -1,9 +1,11 @@
-package test.gojek.gojektest
+package test.gojek.gojektest.ui.weather_info
 
-import android.support.v7.app.AppCompatActivity
+
 import android.os.Bundle
+import test.gojek.gojektest.R
+import test.gojek.gojektest.ui.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
