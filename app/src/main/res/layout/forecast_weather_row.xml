@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/forecast_row_height"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/forecast_row_padding"
+    android:paddingRight="@dimen/forecast_row_padding">
+
+    <TextView
+        android:id="@+id/tvWeekName"
+        style="@style/forecast_row_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center"
+        />
+
+    <TextView
+        android:id="@+id/tvDegrees"
+        style="@style/forecast_row_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/light_grey"></View>
+</FrameLayout>

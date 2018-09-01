@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_screen_bgcolor"
+    android:paddingTop="@dimen/weather_info_top_padding"
+    >
+
+    <TextView
+        android:id="@+id/tvDegrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+       style="@style/degree_text_style"
+        />
+
+    <TextView
+        android:id="@+id/tvCityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/city_text_style"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="@dimen/weatherforecast_list_top_margin"
+        android:paddingTop="@dimen/forecast_row_padding"
+        android:id="@+id/rvForecastList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="error_text_size">54sp</dimen>
+    <dimen name="error_text_button_space">44dp</dimen>
+    <dimen name="standard_padding">16dp</dimen>
+    <dimen name="standard_2">8dp</dimen>
+    <dimen name="standard_1">4dp</dimen>
+    <dimen name="city_text_size">36dp</dimen>
+    <dimen name="degrees_text_size">96dp</dimen>
+    <dimen name="weather_info_top_padding">56dp</dimen>
+    <dimen name="weatherforecast_list_top_margin">62dp</dimen>
+    <dimen name="forecast_row_text_size">16dp</dimen>
+    <dimen name="forecast_row_padding">16dp</dimen>
+    <dimen name="forecast_row_height">96dp</dimen>
+</resources>

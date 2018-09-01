@@ -7,5 +7,45 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="degree_text_style">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:textSize">@dimen/degrees_text_size</item>
+        <item name="android:textColor">@color/degress_color</item>
+    </style>
+    <style name="error_text_style">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">54sp</item>
+    </style>
+    <style name="city_text_style">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textColor">@color/city_text_color</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+        <item name="android:textSize">@dimen/city_text_size</item>
+    </style>
+    <style name="retry_button_style">
+        <item name="android:background">@color/retry_btn_color</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:height">30dp</item>
+        <item name="android:width">80dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="forecast_list_weekname_style">
+    </style>
+    <style name="forecast_list_degree_style">
+    </style>
+    <style name="forecast_row_text_style">
+        <item name="android:textColor">@color/forecast_row_text_color</item>
+        <item name="android:textSize">@dimen/forecast_row_text_size</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+    <style name="forecast_row_style">
+        <item name="android:padding">16dp</item>
+    </style>
+
+
 
 </resources>
