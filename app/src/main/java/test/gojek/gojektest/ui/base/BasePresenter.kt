@@ -2,10 +2,13 @@ package test.gojek.gojektest.ui.base
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
+import io.reactivex.disposables.CompositeDisposable
 
 abstract class BasePresenter : LifecycleObserver {
 
     var baseView: BaseView? = null
+    val disposables = CompositeDisposable()
 
     fun attachLifecycle(lifecycle: Lifecycle) {
         lifecycle.addObserver(this)
@@ -23,11 +26,12 @@ abstract class BasePresenter : LifecycleObserver {
         baseView = null
     }
 
-    fun getView(): BaseView?{
+    fun getView(): BaseView? {
         return baseView
     }
 
-    fun onPresenterDestroy(){
-
+    @OnLifecycleEvent(value = Lifecycle.Event.ON_DESTROY)
+    fun onPresenterDestroy() {
+        disposables.clear()
     }
 }

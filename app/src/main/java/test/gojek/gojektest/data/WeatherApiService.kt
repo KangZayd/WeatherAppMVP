@@ -3,7 +3,6 @@ package test.gojek.gojektest.data
 import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import test.gojek.gojektest.BuildConfig
 import test.gojek.gojektest.data.response.CurrentWeatherResponse
 import test.gojek.gojektest.data.response.ForecastWeatherResponse
 

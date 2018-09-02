@@ -4,7 +4,7 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity(),BaseView {
+abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity(), BaseView {
 
     /**
      * using lifecycle registry presenter can be attached to the activities lifecycle
@@ -19,6 +19,7 @@ abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity
      * @return
      */
     protected abstract fun getLayout(): Int
+
     /**
      * initialize the presenter
      *
@@ -29,6 +30,7 @@ abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
+        presenter = initPresenter()
         presenter.attachLifecycle(lifecycleRegistry)
     }
 
