@@ -1,4 +1,4 @@
-package test.gojek.gojektest.ui.weather_info
+package test.gojek.gojektest.ui.weather_info.presenter
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.MutableLiveData

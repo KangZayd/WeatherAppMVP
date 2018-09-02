@@ -6,8 +6,8 @@ import android.view.Gravity
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import test.gojek.gojektest.ui.weather_info.ErrorFragment
-import test.gojek.gojektest.ui.weather_info.WeatherForecastFragment
+import test.gojek.gojektest.ui.weather_info.fragment.ErrorFragment
+import test.gojek.gojektest.ui.weather_info.fragment.WeatherForecastFragment
 import java.text.SimpleDateFormat
 import java.util.*
 

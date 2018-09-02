@@ -1,4 +1,4 @@
-package test.gojek.gojektest.ui.weather_info
+package test.gojek.gojektest.ui.weather_info.fragment
 
 import android.content.Context
 import android.os.Bundle

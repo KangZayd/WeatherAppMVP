@@ -1,4 +1,4 @@
-package test.gojek.gojektest.ui.weather_info
+package test.gojek.gojektest.ui.weather_info.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.weather_info_screen.*
 import test.gojek.gojektest.R
 import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.ui.base.BaseFragment
+import test.gojek.gojektest.ui.weather_info.adapter.WeatherForecastAdapter
 
 class WeatherForecastFragment : BaseFragment() {
 

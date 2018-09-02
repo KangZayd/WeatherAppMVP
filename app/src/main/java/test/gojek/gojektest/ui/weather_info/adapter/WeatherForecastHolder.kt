@@ -1,4 +1,4 @@
-package test.gojek.gojektest.ui.weather_info
+package test.gojek.gojektest.ui.weather_info.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
