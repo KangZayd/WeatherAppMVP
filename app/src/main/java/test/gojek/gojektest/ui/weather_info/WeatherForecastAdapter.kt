@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import test.gojek.gojektest.R
 import test.gojek.gojektest.data.response.Forecastday
-import test.gojek.gojektest.ui.WeatherForecast
 
 class WeatherForecastAdapter : RecyclerView.Adapter<WeatherForecastHolder>() {
 

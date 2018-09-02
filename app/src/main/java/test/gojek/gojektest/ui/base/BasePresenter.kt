@@ -7,7 +7,6 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BasePresenter : LifecycleObserver {
 
-    var baseView: BaseView? = null
     val disposables = CompositeDisposable()
 
     fun attachLifecycle(lifecycle: Lifecycle) {
@@ -16,18 +15,6 @@ abstract class BasePresenter : LifecycleObserver {
 
     fun detachLifecycle(lifecycle: Lifecycle) {
         lifecycle.removeObserver(this)
-    }
-
-    fun attachView(view: BaseView) {
-        baseView = view
-    }
-
-    fun detachView() {
-        baseView = null
-    }
-
-    fun getView(): BaseView? {
-        return baseView
     }
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_DESTROY)

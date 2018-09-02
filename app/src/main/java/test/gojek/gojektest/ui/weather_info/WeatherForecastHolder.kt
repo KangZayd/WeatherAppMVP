@@ -5,10 +5,7 @@ import android.view.View
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.forecast_weather_row.*
 import test.gojek.gojektest.data.response.Forecastday
-import test.gojek.gojektest.ui.WeatherForecast
 import test.gojek.gojektest.util.getDayOfWeek
-import java.text.SimpleDateFormat
-import java.util.*
 
 class WeatherForecastHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
     override val containerView: View?

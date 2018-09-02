@@ -4,7 +4,7 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity(), BaseView {
+abstract class BaseActivity< p : BasePresenter> : AppCompatActivity() {
 
     /**
      * using lifecycle registry presenter can be attached to the activities lifecycle
@@ -36,12 +36,10 @@ abstract class BaseActivity<v : BaseView, p : BasePresenter> : AppCompatActivity
 
     override fun onPause() {
         super.onPause()
-        presenter.detachView()
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.attachView(this as BaseView)
     }
 
     override fun onDestroy() {

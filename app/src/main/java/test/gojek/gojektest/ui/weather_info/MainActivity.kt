@@ -2,27 +2,19 @@ package test.gojek.gojektest.ui.weather_info
 
 
 import android.arch.lifecycle.Observer
-import android.os.Build
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.View
-import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_main.*
-import test.gojek.gojektest.BuildConfig
 import test.gojek.gojektest.R
 import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.ui.base.BaseActivity
 import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.util.addErrorAnimation
 import test.gojek.gojektest.util.addWeatherScreenAnimation
-import android.view.animation.Animation
-import android.view.animation.RotateAnimation
-import android.view.animation.LinearInterpolator
 import test.gojek.gojektest.util.getRotateAnimation
 
 
-class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRetryListener {
+class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListener {
 
 
     override fun getLayout(): Int {
