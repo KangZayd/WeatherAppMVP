@@ -18,6 +18,8 @@ import test.gojek.gojektest.util.addErrorAnimation
 import test.gojek.gojektest.util.addWeatherScreenAnimation
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import android.view.animation.LinearInterpolator
+import test.gojek.gojektest.util.getRotateAnimation
 
 
 class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRetryListener {
@@ -80,21 +82,11 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRe
     }
 
     fun fetchWeatherInfo() {
-//        presenter.loadData()
+        presenter.loadData()
     }
 
     fun startLoading() {
         imvLoading.visibility = View.VISIBLE
-        val rotate = RotateAnimation(
-                0f, 360f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f
-        )
-        rotate.duration = 1000
-        rotate.repeatCount = Animation.INFINITE
-        imvLoading.startAnimation(rotate)
-//        var rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-//        rotation.setFillAfter(true)
-//        imvLoading.startAnimation(rotation);
+        imvLoading.startAnimation(getRotateAnimation())
     }
 }
