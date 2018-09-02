@@ -10,6 +10,7 @@ import test.gojek.gojektest.R
 import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.ui.base.BaseFragment
 import test.gojek.gojektest.ui.weather_info.adapter.WeatherForecastAdapter
+import test.gojek.gojektest.util.addDegreeSuperScript
 
 class WeatherForecastFragment : BaseFragment() {
 
@@ -34,7 +35,7 @@ class WeatherForecastFragment : BaseFragment() {
 
         var currentWeather = weatherInfo.currentWeatherResponse
         tvCityName.text = currentWeather.location.name
-        tvDegrees.text = currentWeather.current.temp_c.toString()
+        tvDegrees.text = addDegreeSuperScript(currentWeather.current.temp_c.toInt().toString())
     }
 
 }
