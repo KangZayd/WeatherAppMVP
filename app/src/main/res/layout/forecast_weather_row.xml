@@ -4,7 +4,9 @@
     android:layout_height="@dimen/forecast_row_height"
     android:orientation="vertical"
     android:paddingLeft="@dimen/forecast_row_padding"
-    android:paddingRight="@dimen/forecast_row_padding">
+    android:paddingRight="@dimen/forecast_row_padding"
+    android:background="@color/white"
+    >
 
     <TextView
         android:id="@+id/tvWeekName"

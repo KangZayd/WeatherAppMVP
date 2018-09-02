@@ -8,9 +8,9 @@ import test.gojek.gojektest.data.response.ForecastWeatherResponse
 
 interface WeatherApiService {
 
-    @GET("/current.json")
+    @GET("/v1/current.json")
     fun getCurrentWeather(@Query("key") key : String = "c703792f9a4540e595650713180109", @Query("q") cityName: String = "mumbai"): Flowable<CurrentWeatherResponse>
 
-    @GET("/current.json")
-    fun getWeatherForecast(@Query("key") key : String = "c703792f9a4540e595650713180109",@Query("q") cityName: String = "mumbai"): Flowable<ForecastWeatherResponse>
+    @GET("/v1/forecast.json")
+    fun getWeatherForecast(@Query("key") key : String = "c703792f9a4540e595650713180109",@Query("q") cityName: String = "mumbai",@Query("days") day : String = "5"): Flowable<ForecastWeatherResponse>
 }

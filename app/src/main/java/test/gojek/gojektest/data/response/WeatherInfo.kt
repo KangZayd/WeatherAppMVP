@@ -1,3 +1,7 @@
 package test.gojek.gojektest.data.response
 
-data class WeatherInfo(var currentWeatherResponse: CurrentWeatherResponse,var list : List<Forecastday>)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class WeatherInfo(var currentWeatherResponse: CurrentWeatherResponse,var list : List<Forecastday>) : Parcelable

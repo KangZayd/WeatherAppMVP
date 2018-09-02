@@ -9,7 +9,7 @@ import kotlin.jvm.java
 
 object NetworkHandler {
 
-    val BASE_URL = "http://api.apixu.com/v1/"
+    val BASE_URL = "http://api.apixu.com/"
 
     lateinit private var retrofit : Retrofit
 

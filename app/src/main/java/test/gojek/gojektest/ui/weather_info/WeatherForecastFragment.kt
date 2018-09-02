@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.weather_info_screen.*
 import test.gojek.gojektest.R
+import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.ui.base.BaseFragment
 
 class WeatherForecastFragment : BaseFragment() {
+
+    lateinit var weatherInfo : WeatherInfo
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.weather_info_screen,container,false)
@@ -23,8 +26,14 @@ class WeatherForecastFragment : BaseFragment() {
 
     fun addDataToView(){
         var adapter = WeatherForecastAdapter()
+        weatherInfo = arguments?.get("weather_info") as WeatherInfo
+        adapter.list =  weatherInfo.list
         rvForecastList.adapter = adapter
         rvForecastList.layoutManager = LinearLayoutManager(context)
+
+        var currentWeather = weatherInfo.currentWeatherResponse
+        tvCityName.text = currentWeather.location.name
+        tvDegrees.text = currentWeather.current.temp_c.toString()
     }
 
 }

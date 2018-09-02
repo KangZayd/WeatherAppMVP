@@ -1,11 +1,15 @@
 package test.gojek.gojektest.data.response
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class CurrentWeatherResponse(
+@Parcelize
+data class CurrentWeatherResponse (
     val location: Location,
     val current: Current
-)
+): Parcelable
 
+@Parcelize
 data class Current(
     val last_updated_epoch: Int,
     val last_updated: String,
@@ -27,14 +31,16 @@ data class Current(
     val feelslike_f: Double,
     val vis_km: Double,
     val vis_miles: Double
-)
+): Parcelable
 
+@Parcelize
 data class Condition(
     val text: String,
     val icon: String,
     val code: Int
-)
+): Parcelable
 
+@Parcelize
 data class Location(
     val name: String,
     val region: String,
@@ -44,4 +50,4 @@ data class Location(
     val tz_id: String,
     val localtime_epoch: Int,
     val localtime: String
-)
+): Parcelable

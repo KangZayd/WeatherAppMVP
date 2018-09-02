@@ -7,12 +7,18 @@ import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
+import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import test.gojek.gojektest.BuildConfig
 import test.gojek.gojektest.R
+import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.ui.base.BaseActivity
 import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.util.addErrorAnimation
+import test.gojek.gojektest.util.addWeatherScreenAnimation
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+
 
 class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRetryListener {
 
@@ -36,8 +42,22 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRe
 
         when (response) {
 
-            is Response.OnLoading -> if (response.showLoading) progressBar.visibility = View.VISIBLE else progressBar.visibility = View.GONE
-            is Response.SuccessResponse -> supportFragmentManager.beginTransaction().replace(R.id.flContainer, WeatherForecastFragment(), "success").commit()
+            is Response.OnLoading -> {
+                if (response.showLoading) {
+                    startLoading()
+                } else {
+                    imvLoading.clearAnimation()
+                    imvLoading.visibility = View.GONE
+                }
+            }
+            is Response.SuccessResponse -> {
+                var fragment = WeatherForecastFragment()
+                var bundle = Bundle()
+                bundle.putParcelable("weather_info", response.s as WeatherInfo)
+                fragment.arguments = bundle
+                addWeatherScreenAnimation(fragment)
+                supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "success").commit()
+            }
             is Response.ErrorResponse -> {
                 var fragment = ErrorFragment()
                 addErrorAnimation(fragment)
@@ -60,7 +80,21 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), ErrorFragment.OnRe
     }
 
     fun fetchWeatherInfo() {
-        presenter.loadData()
+//        presenter.loadData()
     }
 
+    fun startLoading() {
+        imvLoading.visibility = View.VISIBLE
+        val rotate = RotateAnimation(
+                0f, 360f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        )
+        rotate.duration = 1000
+        rotate.repeatCount = Animation.INFINITE
+        imvLoading.startAnimation(rotate)
+//        var rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+//        rotation.setFillAfter(true)
+//        imvLoading.startAnimation(rotation);
+    }
 }

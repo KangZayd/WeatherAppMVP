@@ -4,11 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import test.gojek.gojektest.R
+import test.gojek.gojektest.data.response.Forecastday
 import test.gojek.gojektest.ui.WeatherForecast
 
 class WeatherForecastAdapter : RecyclerView.Adapter<WeatherForecastHolder>() {
 
-    var list = mutableListOf<WeatherForecast>()
+    var list = listOf<Forecastday>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherForecastHolder {
         return WeatherForecastHolder(LayoutInflater.from(parent.context).inflate(R.layout.forecast_weather_row,parent,false))
