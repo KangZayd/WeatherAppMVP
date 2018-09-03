@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 object NetworkHandler {
 
     val BASE_URL = "http://api.apixu.com/"
-    val KEY = "c703792f9a4540e595650713180109"
+    val KEY = your api key
     val CITY = "mumbai"
     val DAYS = "5"
 

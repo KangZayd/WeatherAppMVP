@@ -1,0 +1,6 @@
+ext.signing = [
+        storeFilePath : 'go_key.jks',
+        storePassword : 'gojeks',
+        keyAlias : 'gojek',
+        keyPassword : 'gojeks',
+]

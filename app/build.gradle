@@ -2,27 +2,53 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def signingFilePath = '..\\signing\\signing.gradle'
+def performSigning = file(signingFilePath).exists()
+if (performSigning) {
+    apply from: signingFilePath
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "test.gojek.gojektest"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    if (performSigning) {
+        signingConfigs {
+            release {
+                storeFile file(project.signing.storeFilePath)
+                storePassword project.signing.storePassword
+                keyAlias project.signing.keyAlias
+                keyPassword project.signing.keyPassword
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+        }
+    }
+
     buildTypes {
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if (performSigning) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
     androidExtensions {
         experimental = true
     }
+
+
 }
 
 dependencies {
@@ -44,3 +70,38 @@ dependencies {
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
 }
+
+def targetPath = file("..\\release_apk")
+
+task verifyTargetPath {
+    doLast {
+        if (!targetPath.exists()) {
+            throw new GradleException("Target path not valid!")
+        }
+    }
+}
+
+task buildReleaseApk(dependsOn:
+        ['verifyTargetPath', 'assembleRelease']) {
+    doLast {
+        ext.versionCode = project.android.defaultConfig.versionCode
+        ext.apkName = "android-release-build${ext.versionCode}.apk"
+
+        // make sure that the file doesn't already exist
+        if (targetPath.list().contains(ext.apkName)) {
+            throw new GradleException("Build with versionCode ${ext.versionCode} already exists!")
+        }
+
+        // verify that the build was generated successfully
+        ext.apk = file("build/outputs/apk/release/app-release.apk")
+        if (ext.apk.exists()) {
+            copy {
+                from ext.apk.absolutePath
+                into targetPath
+                rename { ext.apkName }
+            }
+        }
+    }
+}
+
+
