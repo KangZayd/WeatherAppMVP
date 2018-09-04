@@ -7,6 +7,8 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import test.gojek.gojektest.R
 import test.gojek.gojektest.data.response.WeatherInfo
+import test.gojek.gojektest.di.DaggerMainComponent
+import test.gojek.gojektest.di.MainComponent
 import test.gojek.gojektest.ui.base.BaseActivity
 import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.ui.weather_info.fragment.ErrorFragment
@@ -19,6 +21,7 @@ import test.gojek.gojektest.util.getRotateAnimation
 
 class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListener {
 
+    lateinit var mainComponent: MainComponent
 
     override fun getLayout(): Int {
         return R.layout.activity_main
@@ -26,6 +29,13 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
 
     override fun initPresenter(): MainPresenter {
         return MainPresenter()
+    }
+
+    override fun init() {
+        mainComponent = DaggerMainComponent.create();
+        mainComponent.inject(this)
+        mainComponent.inject(presenter)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

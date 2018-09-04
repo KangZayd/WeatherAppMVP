@@ -9,11 +9,17 @@ import test.gojek.gojektest.data.usecases.FetchWeatherInfoUsecase
 import test.gojek.gojektest.ui.base.BasePresenter
 import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.util.SchedulersUtil
+import javax.inject.Inject
 
-class MainPresenter : BasePresenter() {
+class MainPresenter @Inject constructor() : BasePresenter() {
 
     var livedata = MutableLiveData<Response>()
-    var schedulers = SchedulersUtil()
+
+    @Inject
+    lateinit var fetchWeatherInfoUsecase: FetchWeatherInfoUsecase
+
+    @Inject
+    lateinit var schedulers: SchedulersUtil
 
     fun observeForWeatherInfo(): MutableLiveData<Response> {
         return livedata
@@ -21,8 +27,6 @@ class MainPresenter : BasePresenter() {
 
 
     fun loadData() {
-
-        var fetchWeatherInfoUsecase = FetchWeatherInfoUsecase()
 
         disposables.add(fetchWeatherInfoUsecase.execute().subscribeOn(schedulers.io()).observeOn(schedulers.ui())
                 .doOnSubscribe {

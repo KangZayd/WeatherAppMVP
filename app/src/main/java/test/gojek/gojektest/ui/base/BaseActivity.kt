@@ -3,6 +3,7 @@ package test.gojek.gojektest.ui.base
 import android.arch.lifecycle.LifecycleRegistry
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import javax.inject.Inject
 
 abstract class BaseActivity< p : BasePresenter> : AppCompatActivity() {
 
@@ -10,8 +11,9 @@ abstract class BaseActivity< p : BasePresenter> : AppCompatActivity() {
      * using lifecycle registry presenter can be attached to the activities lifecycle
      */
     private val lifecycleRegistry = LifecycleRegistry(this)
-    lateinit protected var presenter: p
+    @Inject lateinit protected var presenter: p
 
+    protected abstract fun init()
 
     /**
      * get the layout of the activity
@@ -29,8 +31,9 @@ abstract class BaseActivity< p : BasePresenter> : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
         setContentView(getLayout())
-        presenter = initPresenter()
+//        presenter = initPresenter()
         presenter.attachLifecycle(lifecycleRegistry)
     }
 
