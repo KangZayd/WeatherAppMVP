@@ -20,6 +20,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    }
+
     if (performSigning) {
         signingConfigs {
             release {
@@ -70,6 +80,19 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
     implementation "com.google.dagger:dagger:$rootProject.dagger_version"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+
+    testCompile "org.robolectric:robolectric:3.8"
+
 }
 
 def targetPath = file("..\\release_apk")

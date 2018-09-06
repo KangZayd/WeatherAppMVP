@@ -1,6 +1,7 @@
 package test.gojek.gojektest.ui.weather_info.fragment
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,9 @@ class ErrorFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.error_screen, container, false)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity?.window?.setStatusBarColor(getResources().getColor(R.color.error_fragment_color));
+        }
         return view
     }
 

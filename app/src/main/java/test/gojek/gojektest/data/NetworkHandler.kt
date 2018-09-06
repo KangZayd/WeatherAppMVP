@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit
 object NetworkHandler {
 
     val BASE_URL = "http://api.apixu.com/"
-    val KEY = "c703792f9a4540e595650713180109"
+    val KEY = "39783181715b494cba493310180609"
     val CITY = "mumbai"
-    val DAYS = "5"
+    val DAYS = "30"
 
     lateinit private var retrofit: Retrofit
 

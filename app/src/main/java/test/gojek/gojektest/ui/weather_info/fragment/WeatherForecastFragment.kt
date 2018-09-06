@@ -1,5 +1,6 @@
 package test.gojek.gojektest.ui.weather_info.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -18,6 +19,9 @@ class WeatherForecastFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.weather_info_screen,container,false)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity?.window?.setStatusBarColor(getResources().getColor(R.color.forecast_fragment_color));
+        }
         return view
     }
 
