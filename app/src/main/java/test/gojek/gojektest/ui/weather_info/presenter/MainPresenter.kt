@@ -1,8 +1,6 @@
 package test.gojek.gojektest.ui.weather_info.presenter
 
-import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.OnLifecycleEvent
 import io.reactivex.subscribers.ResourceSubscriber
 import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.data.usecases.FetchWeatherInfoUsecase
@@ -26,12 +24,12 @@ class MainPresenter @Inject constructor() : BasePresenter() {
     }
 
 
-    fun loadData() {
-
+    fun loadData(name: String) {
+        fetchWeatherInfoUsecase.cityName = name
         disposables.add(fetchWeatherInfoUsecase.execute().subscribeOn(schedulers.io()).observeOn(schedulers.ui())
-                .doOnSubscribe {
-                    livedata.value = Response.OnLoading(true)
-                }
+//                .doOnSubscribe {
+//                    livedata.value = Response.OnLoading(true)
+//                }
                 .subscribeWith(object : ResourceSubscriber<WeatherInfo>() {
                     override fun onComplete() {
 

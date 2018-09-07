@@ -9,12 +9,14 @@ import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.util.isToday
 import javax.inject.Inject
 
-class FetchWeatherInfoUsecase @Inject constructor(var forecasteUsecase: WeatherForecasteUsecase,var currentWeatherUsecase: CurrentWeatherUsecase) : Interactor<WeatherInfo> {
+class FetchWeatherInfoUsecase @Inject constructor(var forecasteUsecase: WeatherForecasteUsecase, var currentWeatherUsecase: CurrentWeatherUsecase) : Interactor<WeatherInfo> {
+
+    lateinit var cityName: String
 
     override fun execute(): Flowable<WeatherInfo> {
 
-//        var currentWeatherUsecase = CurrentWeatherUsecase(apiService)
-//        var forecasteUsecase = WeatherForecasteUsecase(apiService)
+        forecasteUsecase.cityName = cityName
+        currentWeatherUsecase.cityName = cityName
 
         var flowable = currentWeatherUsecase.execute().zipWith(forecasteUsecase.execute(),
                 object : BiFunction<CurrentWeatherResponse, ForecastWeatherResponse, WeatherInfo> {

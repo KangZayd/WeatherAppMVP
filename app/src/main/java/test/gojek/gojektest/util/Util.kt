@@ -10,10 +10,15 @@ import android.view.Gravity
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
+import test.gojek.gojektest.appContext
 import test.gojek.gojektest.ui.weather_info.fragment.ErrorFragment
 import test.gojek.gojektest.ui.weather_info.fragment.WeatherForecastFragment
 import java.text.SimpleDateFormat
 import java.util.*
+
+fun getString(resId : Int) : String{
+    return appContext.getString(resId)
+}
 
 fun addErrorAnimation(fragment: ErrorFragment) {
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {

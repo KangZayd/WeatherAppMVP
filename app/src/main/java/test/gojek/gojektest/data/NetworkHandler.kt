@@ -12,8 +12,8 @@ object NetworkHandler {
 
     val BASE_URL = "http://api.apixu.com/"
     val KEY = "39783181715b494cba493310180609"
-    val CITY = "mumbai"
-    val DAYS = "30"
+    val CITY = ""
+    val DAYS = "10"
 
     lateinit private var retrofit: Retrofit
 

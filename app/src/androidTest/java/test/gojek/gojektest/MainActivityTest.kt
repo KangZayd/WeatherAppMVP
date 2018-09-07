@@ -10,10 +10,13 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.filters.LargeTest
 import android.support.test.filters.SmallTest
+import android.support.v7.widget.RecyclerView
 import org.junit.Assert
 import org.junit.Test
 import test.gojek.gojektest.ui.base.Response
-
+import test.gojek.gojektest.ui.weather_info.fragment.WeatherForecastFragment
+import android.support.test.espresso.contrib.RecyclerViewActions
+import test.gojek.gojektest.ui.weather_info.adapter.WeatherForecastHolder
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
@@ -21,6 +24,20 @@ class MainActivityTest {
 
     @get:Rule
     val mainActivityActivityTestRule = MainActivityTestRule(MainActivity::class.java)
+
+//    @Test
+//    fun testWeatherFragment(){
+//
+//        var fragment = mainActivityActivityTestRule.activity.supportFragmentManager.findFragmentById(R.id.flContainer)
+//
+//        when(fragment){
+//            is WeatherForecastFragment -> {
+//                Espresso.onView(ViewMatchers.withId(R.id.rvForecastList))
+//                        .perform(RecyclerViewActions.actionOnItemAtPosition<WeatherForecastHolder>(1, click()))
+//            }
+//        }
+//
+//    }
 
     @Test
     fun testUi() {
