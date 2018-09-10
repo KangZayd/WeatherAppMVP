@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.error_screen.*
 import test.gojek.gojektest.R
+import test.gojek.gojektest.data.NetworkHandler
 import test.gojek.gojektest.ui.base.BaseFragment
 
 class ErrorFragment : BaseFragment() {
@@ -23,6 +24,9 @@ class ErrorFragment : BaseFragment() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity?.window?.setStatusBarColor(getResources().getColor(R.color.error_fragment_color));
         }
+
+
+
         return view
     }
 
@@ -34,6 +38,11 @@ class ErrorFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(NetworkHandler.KEY == null){
+            tvErrorText.text = "Get you api key from https://www.apixu.com/"
+        }
+
         addRetryListener()
     }
 

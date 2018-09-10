@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 object NetworkHandler {
 
     val BASE_URL = "http://api.apixu.com/"
-    val KEY = ""
+    val KEY : String ?= null
     val CITY = ""
     val DAYS = "10"
 
@@ -19,7 +19,8 @@ object NetworkHandler {
 
     fun init() {
 
-        val okHttpClient = OkHttpClient().newBuilder().connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build()
+        val okHttpClient = OkHttpClient().newBuilder().connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS).build()
 
         retrofit = Retrofit.Builder()
                 .baseUrl(NetworkHandler.BASE_URL)
