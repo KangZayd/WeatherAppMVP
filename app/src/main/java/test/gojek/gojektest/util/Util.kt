@@ -1,12 +1,13 @@
 package test.gojek.gojektest.util
 
+import android.graphics.drawable.Drawable
 import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
-import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import android.transition.Fade
 import android.transition.Slide
 import android.view.Gravity
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
@@ -15,9 +16,70 @@ import test.gojek.gojektest.ui.weather_info.fragment.ErrorFragment
 import test.gojek.gojektest.ui.weather_info.fragment.WeatherForecastFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.animation.Animation.AnimationListener
+import android.view.animation.AnimationSet
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 
-fun getString(resId : Int) : String{
+
+fun animate(imageView: ImageView, images: IntArray, imageIndex: Int, forever: Boolean) {
+
+    //imageView <-- The View which displays the images
+    //images[] <-- Holds R references to the images to display
+    //imageIndex <-- index of the first image to show in images[]
+    //forever <-- If equals true then after the last image it starts all over again with the first image resulting in an infinite loop. You have been warned.
+
+    val fadeInDuration = 500 // Configure time values here
+    val timeBetween = 3000
+    val fadeOutDuration = 1000
+
+    imageView.setVisibility(View.INVISIBLE)    //Visible or invisible by default - this will apply when the animation ends
+    imageView.setImageResource(images[imageIndex])
+
+    val fadeIn = AlphaAnimation(0f, 1f)
+    fadeIn.interpolator = DecelerateInterpolator() // add this
+    fadeIn.duration = fadeInDuration.toLong()
+
+    val fadeOut = AlphaAnimation(1f, 0f)
+    fadeOut.interpolator = AccelerateInterpolator() // and this
+    fadeOut.startOffset = (fadeInDuration + timeBetween).toLong()
+    fadeOut.duration = fadeOutDuration.toLong()
+
+    val animation = AnimationSet(false) // change to false
+    animation.addAnimation(fadeIn)
+    animation.addAnimation(fadeOut)
+    animation.repeatCount = 1
+    imageView.setAnimation(animation)
+
+    animation.setAnimationListener(object : AnimationListener {
+        override fun onAnimationEnd(animation: Animation) {
+            if (images.size - 1 > imageIndex) {
+                animate(imageView, images, imageIndex + 1, forever) //Calls itself until it gets to the end of the array
+            } else {
+                if (forever) {
+                    animate(imageView, images, 0, forever)  //Calls itself to start the animation all over again in a loop if forever = true
+                }
+            }
+        }
+
+        override fun onAnimationRepeat(animation: Animation) {
+            // TODO Auto-generated method stub
+        }
+
+        override fun onAnimationStart(animation: Animation) {
+            // TODO Auto-generated method stub
+        }
+    })
+}
+
+fun getString(resId: Int): String {
     return appContext.getString(resId)
+}
+
+fun getImage(resId: Int): Drawable {
+    return appContext.resources.getDrawable(resId)
 }
 
 fun addErrorAnimation(fragment: ErrorFragment) {

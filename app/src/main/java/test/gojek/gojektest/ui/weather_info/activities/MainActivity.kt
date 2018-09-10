@@ -1,10 +1,11 @@
 package test.gojek.gojektest.ui.weather_info.activities
 
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.pm.PackageManager
+import android.graphics.drawable.AnimationDrawable
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
@@ -21,11 +22,8 @@ import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.ui.weather_info.fragment.ErrorFragment
 import test.gojek.gojektest.ui.weather_info.fragment.WeatherForecastFragment
 import test.gojek.gojektest.ui.weather_info.presenter.MainPresenter
-import test.gojek.gojektest.util.addErrorAnimation
-import test.gojek.gojektest.util.addWeatherScreenAnimation
-import test.gojek.gojektest.util.getRotateAnimation
+import test.gojek.gojektest.util.*
 import javax.inject.Inject
-
 
 class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListener {
 
@@ -52,6 +50,7 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        addStatusBarColor()
         showLoading(true)
         presenter.observeForWeatherInfo().observe(this@MainActivity, Observer { response -> response?.let { processResponse(response) } })
         checkForPermissions()
@@ -59,7 +58,8 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
 
     fun showLoading(showLoading: Boolean) {
         if (showLoading) {
-            startLoading()
+//            startLoading()
+            initAnimations()
         } else {
             imvLoading.clearAnimation()
             imvLoading.visibility = View.GONE
@@ -82,20 +82,23 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
                 supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "success").commit()
             }
             is Response.ErrorResponse -> {
-                showError(response.s )
+                showError(response.s)
             }
         }
     }
 
-    fun showError(errorString : String?){
+    fun showError(errorString: String?) {
         var fragment = ErrorFragment()
         addErrorAnimation(fragment)
         var bundle = Bundle()
-        bundle.putString("error_msg",errorString)
+        bundle.putString("error_msg", errorString)
         supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "error").commit()
     }
 
     override fun onRetryClick() {
+
+        addStatusBarColor()
+
         for (fragment in supportFragmentManager.fragments) {
             fragment?.let {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
@@ -104,20 +107,26 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         fetchWeatherInfo()
     }
 
+    fun addStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window?.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark))
+        }
+    }
+
     @SuppressLint("MissingPermission")
     fun fetchWeatherInfo() {
         fetchCurrentCity.observe(this@MainActivity, Observer {
             it?.let {
-               processCityResponse(it)
+                processCityResponse(it)
             }
         })
     }
 
-    fun processCityResponse(response: Response){
+    fun processCityResponse(response: Response) {
 
-        when(response){
+        when (response) {
             is Response.ErrorResponse -> {
-             showError(response.s)
+                showError(response.s)
             }
             is Response.SuccessResponse -> {
                 presenter.loadData(response.s as String)
@@ -154,6 +163,11 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
                 return
             }
         }
+    }
+
+    fun initAnimations() {
+        var drawable = imvLoading.drawable as AnimationDrawable
+        drawable.start()
     }
 
 
