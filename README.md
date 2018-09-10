@@ -16,11 +16,3 @@ Languages, libraries and tools used
     Gson
     Livedata
     Lifecycleobserver
-
-Requirements
-
-    JDK 1.8
-    Android SDK
-    Android O (API 26)
-    Latest Android SDK Tools and build tools.
-
