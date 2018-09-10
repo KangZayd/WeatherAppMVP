@@ -4,3 +4,23 @@ A simple weather app that fetches the weather forecast for next 7 days from api 
 This app shows the demo of how to implement MVP architecture replacing the traditional MVPView with livedata. The main language used is kotlin. 
 
 Generate api key from https://www.apixu.com/
+
+Languages, libraries and tools used
+
+    Kotlin
+    Android Support Libraries
+    RxJava2
+    Dagger 2 (2.11)
+    Retrofit
+    OkHttp
+    Gson
+    Livedata
+    Lifecycleobserver
+
+Requirements
+
+    JDK 1.8
+    Android SDK
+    Android O (API 26)
+    Latest Android SDK Tools and build tools.
+
