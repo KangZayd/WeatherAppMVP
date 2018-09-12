@@ -9,7 +9,7 @@ import test.gojek.gojektest.data.response.WeatherInfo
 import test.gojek.gojektest.util.isToday
 import javax.inject.Inject
 
-class FetchWeatherInfoUsecase @Inject constructor(var forecasteUsecase: WeatherForecasteUsecase, var currentWeatherUsecase: CurrentWeatherUsecase) : Interactor<WeatherInfo> {
+open class FetchWeatherInfoUsecase @Inject constructor(var forecasteUsecase: WeatherForecasteUsecase, var currentWeatherUsecase: CurrentWeatherUsecase) : Interactor<WeatherInfo> {
 
     lateinit var cityName: String
 

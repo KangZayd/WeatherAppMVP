@@ -2,6 +2,7 @@ package test.gojek.gojektest.ui.base
 
 import android.arch.lifecycle.LifecycleRegistry
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.app.AppCompatActivity
 import javax.inject.Inject
 
@@ -11,7 +12,9 @@ abstract class BaseActivity< p : BasePresenter> : AppCompatActivity() {
      * using lifecycle registry presenter can be attached to the activities lifecycle
      */
     private val lifecycleRegistry = LifecycleRegistry(this)
-    @Inject lateinit protected var presenter: p
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    @Inject lateinit var presenter: p
 
     protected abstract fun init()
 

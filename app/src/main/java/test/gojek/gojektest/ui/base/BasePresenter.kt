@@ -3,9 +3,11 @@ package test.gojek.gojektest.ui.base
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
+import android.support.annotation.VisibleForTesting
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BasePresenter : LifecycleObserver {
+
 
     val disposables = CompositeDisposable()
 

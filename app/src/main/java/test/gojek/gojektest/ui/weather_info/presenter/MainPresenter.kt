@@ -9,7 +9,7 @@ import test.gojek.gojektest.ui.base.Response
 import test.gojek.gojektest.util.SchedulersUtil
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor() : BasePresenter() {
+open class MainPresenter @Inject constructor() : BasePresenter() {
 
     var livedata = MutableLiveData<Response>()
 
@@ -26,6 +26,7 @@ class MainPresenter @Inject constructor() : BasePresenter() {
 
     fun loadData(name: String) {
         fetchWeatherInfoUsecase.cityName = name
+
         disposables.add(fetchWeatherInfoUsecase.execute().subscribeOn(schedulers.io()).observeOn(schedulers.ui())
 //                .doOnSubscribe {
 //                    livedata.value = Response.OnLoading(true)
@@ -37,14 +38,13 @@ class MainPresenter @Inject constructor() : BasePresenter() {
 
                     override fun onNext(t: WeatherInfo) {
                         livedata.value = Response.SuccessResponse(t)
+                        System.out.println("the data is " + t.toString())
                     }
 
                     override fun onError(t: Throwable?) {
                         livedata.value = Response.ErrorResponse(t?.localizedMessage)
                     }
-
                 }))
-
     }
 
 

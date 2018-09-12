@@ -5,7 +5,7 @@ import test.gojek.gojektest.data.WeatherApiService
 import test.gojek.gojektest.data.response.CurrentWeatherResponse
 
 
-class CurrentWeatherUsecase(var apiService: WeatherApiService) : Interactor<CurrentWeatherResponse> {
+open class CurrentWeatherUsecase(var apiService: WeatherApiService) : Interactor<CurrentWeatherResponse> {
     lateinit var cityName : String
     override fun execute(): Flowable<CurrentWeatherResponse> {
         return apiService.getCurrentWeather(cityName = cityName)
