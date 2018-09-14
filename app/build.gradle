@@ -12,7 +12,7 @@ if (performSigning) {
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "test.gojek.gojektest"
+        applicationId "test.demo.weatherapp"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 2
@@ -29,6 +29,7 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+            returnDefaultValues = true
         }
     }
 
@@ -71,7 +72,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
@@ -96,27 +97,14 @@ dependencies {
         exclude group: 'com.android.support'
         exclude module: 'recyclerview-v7'
     }
-
     implementation "com.google.dagger:dagger:$rootProject.dagger_version"
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
-    testImplementation 'org.hamcrest:hamcrest-library:1.3'
-    // Required -- JUnit 4 framework
-    testImplementation 'junit:junit:4.12'
-    // Optional -- Mockito framework
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.8.0'
-    testImplementation 'org.powermock:powermock-api-mockito2:1.7.0RC2'
-    testImplementation 'org.powermock:powermock-module-junit4:1.7.0'
-    testImplementation 'org.powermock:powermock-core:1.7.0'
-    testImplementation 'org.powermock:powermock-module-junit4-rule:1.7.0'
-    testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
-    //and/or
-    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
 
-    //kotlin helper methods
-    testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
-    //and/or
-    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+        testImplementation 'org.mockito:mockito-core:2.9.0'
+        androidTestImplementation 'org.mockito:mockito-core:2.9.0'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker:1.4'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker-dx:1.4'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
 
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
@@ -124,9 +112,14 @@ dependencies {
     androidTestImplementation("com.android.support:support-annotations:$rootProject.supportLibraryVersion") {
         exclude group: 'com.android.support'
     }
+    //kotlin helper methods
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+    //and/or
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
 
-    testImplementation  "org.robolectric:robolectric:3.8"
+    //
 
+    //    testImplementation  "org.robolectric:robolectric:3.8"
 }
 
 def targetPath = file("..\\release_apk")
