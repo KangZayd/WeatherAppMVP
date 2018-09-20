@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -17,12 +18,17 @@ import test.demo.weatherapp.data.response.WeatherInfo
 import test.demo.weatherapp.di.DaggerMainComponent
 import test.demo.weatherapp.di.MainComponent
 import test.demo.weatherapp.location.FetchCurrentCity
+import test.demo.weatherapp.location.LocationListener
+import test.demo.weatherapp.location.LocationSettingsHandler
+import test.demo.weatherapp.location.REQUEST_CHECK_SETTINGS
 import test.demo.weatherapp.ui.base.BaseActivity
+import test.demo.weatherapp.ui.base.LocationResponse
 import test.demo.weatherapp.ui.base.Response
 import test.demo.weatherapp.ui.weather_info.fragment.ErrorFragment
 import test.demo.weatherapp.ui.weather_info.fragment.WeatherForecastFragment
 import test.demo.weatherapp.ui.weather_info.presenter.MainPresenter
-import test.demo.weatherapp.util.*
+import test.demo.weatherapp.util.addErrorAnimation
+import test.demo.weatherapp.util.addWeatherScreenAnimation
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListener {
@@ -30,6 +36,8 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
     lateinit var mainComponent: MainComponent
     @Inject
     lateinit var fetchCurrentCity: FetchCurrentCity
+    @Inject
+    lateinit var locationListener: LocationListener
     val COARSE_LOCATION = 1;
 
     override fun getLayout(): Int {
@@ -53,12 +61,11 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         addStatusBarColor()
         showLoading(true)
         presenter.observeForWeatherInfo().observe(this@MainActivity, Observer { response -> response?.let { processResponse(response) } })
-        checkForPermissions()
+        fetchUserCity()
     }
 
     fun showLoading(showLoading: Boolean) {
         if (showLoading) {
-//            startLoading()
             initAnimations()
         } else {
             imvLoading.clearAnimation()
@@ -74,6 +81,7 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
                 showLoading(response.showLoading)
             }
             is Response.SuccessResponse -> {
+
                 var fragment = WeatherForecastFragment()
                 var bundle = Bundle()
                 bundle.putParcelable("weather_info", response.s as WeatherInfo)
@@ -84,6 +92,9 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
             is Response.ErrorResponse -> {
                 showError(response.s)
             }
+            is Response.LocationResponse -> {
+                requestUserLocation()
+            }
         }
     }
 
@@ -92,6 +103,7 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         addErrorAnimation(fragment)
         var bundle = Bundle()
         bundle.putString("error_msg", errorString)
+        fragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment, "error").commit()
     }
 
@@ -104,7 +116,7 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         }
-        fetchWeatherInfo()
+        fetchUserCity()
     }
 
     fun addStatusBarColor() {
@@ -113,8 +125,46 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         }
     }
 
+    /**
+     * listen to user location updates
+     */
     @SuppressLint("MissingPermission")
-    fun fetchWeatherInfo() {
+    fun requestUserLocation() {
+
+        locationListener.observe(this@MainActivity, locationObserver)
+
+    }
+
+    var locationObserver = Observer<LocationResponse> { response -> response?.let { processLocationResponse(response) } }
+
+    fun processLocationResponse(locationResponse: LocationResponse) {
+
+        when (locationResponse) {
+
+            is LocationResponse.LocationSettings -> {
+                /**
+                 * check if we have appropriate settings
+                 */
+
+                var locationSettingsHandler = LocationSettingsHandler(this@MainActivity)
+                locationSettingsHandler.checkLocationSettings { }
+            }
+            is LocationResponse.FetchLocation -> {
+
+                /**
+                 * remove observer
+                 */
+                locationListener.removeObserver(locationObserver)
+                fetchCurrentCity(locationResponse.location)
+            }
+        }
+    }
+
+    /**
+     * Fetch the user city
+     */
+    fun fetchCurrentCity(location: Location) {
+        fetchCurrentCity.location = location
         fetchCurrentCity.observe(this@MainActivity, Observer {
             it?.let {
                 processCityResponse(it)
@@ -135,11 +185,9 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
 
     }
 
-    fun startLoading() {
-        imvLoading.visibility = View.VISIBLE
-        imvLoading.startAnimation(getRotateAnimation())
-    }
-
+    /**
+     * Open permissions dialog to ask the location permission
+     */
     fun checkForPermissions() {
 
         if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -147,7 +195,7 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
             ActivityCompat.requestPermissions(this@MainActivity,
                     arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), COARSE_LOCATION)
         } else {
-            fetchWeatherInfo()
+            requestUserLocation()
         }
     }
 
@@ -156,11 +204,14 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         when (requestCode) {
             COARSE_LOCATION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    fetchWeatherInfo()
+                    requestUserLocation()
                 } else {
-                    Toast.makeText(this@MainActivity, "Need permission to fetch weather information", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity, "Need permission to fetch weather information", Toast.LENGTH_SHORT).show()
+                    showError("Need permission to fetch weather information")
                 }
-                return
+            }
+            REQUEST_CHECK_SETTINGS -> {
+                requestUserLocation()
             }
         }
     }
@@ -170,5 +221,14 @@ class MainActivity : BaseActivity<MainPresenter>(), ErrorFragment.OnRetryListene
         drawable.start()
     }
 
+    /**
+     * fetch the user city
+     */
 
+    fun fetchUserCity(){
+        /**
+         * check if we have the permissiion to acces the user location
+         */
+        checkForPermissions()
+    }
 }

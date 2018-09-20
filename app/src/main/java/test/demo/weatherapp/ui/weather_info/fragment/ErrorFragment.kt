@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.error_screen.*
 import test.demo.weatherapp.R
-import test.demo.weatherapp.data.NetworkHandler
 import test.demo.weatherapp.ui.base.BaseFragment
 
 class ErrorFragment : BaseFragment() {
 
     var listener: OnRetryListener? = null
+    var errorText: String? = null
 
     interface OnRetryListener {
         fun onRetryClick()
@@ -21,12 +21,9 @@ class ErrorFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.error_screen, container, false)
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity?.window?.setStatusBarColor(getResources().getColor(R.color.error_fragment_color));
         }
-
-
-
         return view
     }
 
@@ -39,8 +36,10 @@ class ErrorFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(NetworkHandler.KEY == null){
-            tvErrorText.text = "Get you api key from https://www.apixu.com/"
+        var text = arguments?.getString("error_msg")
+
+        if (!text.isNullOrEmpty()) {
+            tvErrorText.text = text
         }
 
         addRetryListener()

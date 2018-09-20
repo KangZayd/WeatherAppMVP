@@ -24,6 +24,14 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 
 
+fun Any?.isNull(f: ()-> Unit){
+    if (this != null){
+        f()
+    }
+}
+
+
+
 fun animate(imageView: ImageView, images: IntArray, imageIndex: Int, forever: Boolean) {
 
     //imageView <-- The View which displays the images

@@ -2,10 +2,13 @@ package test.demo.weatherapp.location
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
+import android.content.IntentSender
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 import test.demo.weatherapp.App
 import test.demo.weatherapp.R
 import test.demo.weatherapp.appContext
@@ -15,9 +18,13 @@ import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
-class FetchCurrentCity @Inject constructor() : LiveData<Response>() {
 
-    lateinit var location: Location
+/**
+ *  Fetch the user city name using geocoder from the current location
+ */
+class FetchCurrentCity  @Inject constructor() : LiveData<Response>() {
+
+    lateinit var location:Location
 
     fun fetchCityName() {
         val geocoder = Geocoder(appContext, Locale.getDefault())
@@ -43,12 +50,12 @@ class FetchCurrentCity @Inject constructor() : LiveData<Response>() {
     @SuppressLint("MissingPermission")
     override fun onActive() {
         super.onActive()
-        LocationServices.getFusedLocationProviderClient(appContext).lastLocation.addOnSuccessListener {
-            it?.let {
-                location = it
-                fetchCityName()
-            }
-        }
+        fetchCityName()
     }
+
+
+
+
+
 
 }

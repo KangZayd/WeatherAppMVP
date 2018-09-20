@@ -28,9 +28,6 @@ open class MainPresenter @Inject constructor() : BasePresenter() {
         fetchWeatherInfoUsecase.cityName = name
 
         disposables.add(fetchWeatherInfoUsecase.execute().subscribeOn(schedulers.io()).observeOn(schedulers.ui())
-//                .doOnSubscribe {
-//                    livedata.value = Response.OnLoading(true)
-//                }
                 .subscribeWith(object : ResourceSubscriber<WeatherInfo>() {
                     override fun onComplete() {
 
@@ -42,7 +39,16 @@ open class MainPresenter @Inject constructor() : BasePresenter() {
                     }
 
                     override fun onError(t: Throwable?) {
-                        livedata.value = Response.ErrorResponse(t?.localizedMessage)
+
+                        var message: String?
+
+                        if (t is retrofit2.adapter.rxjava2.HttpException && t.code() == 401) {
+                            message = "Get you api key from https://www.apixu.com/"
+                        } else {
+                            message = t?.localizedMessage
+                        }
+
+                        livedata.value = Response.ErrorResponse(message)
                     }
                 }))
     }

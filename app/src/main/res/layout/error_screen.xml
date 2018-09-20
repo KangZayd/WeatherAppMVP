@@ -22,10 +22,11 @@
         android:id="@+id/btnRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvErrorText"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         style="@style/retry_button_style"
         android:text="@string/retry"
+        android:layout_marginBottom="@dimen/weather_info_top_padding"
         />
 
 </RelativeLayout>
